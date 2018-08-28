@@ -1,4 +1,6 @@
 #+TITLE: Python Interview Cheatsheet
+#+OPTIONS: toc:nil
+
 * Libraries
 ** Heap
 #+BEGIN_SRC python
@@ -73,7 +75,7 @@
       return new_pivot_idx
 #+END_SRC
 *** Linked Lists
-**** Reverse Linked List
+**** Reverse Sub-list
 #+BEGIN_SRC python
   def reverse_sublist(L, start, finish):
       dummy_head = sublist_head = ListNode(0, L)
@@ -99,6 +101,20 @@
               return True
       return False
 #+END_SRC
+*** Reverse Linked List
+
+#+BEGIN_SRC python
+  def reverse_linked_list(head):
+      prev = None
+      curr = head
+      while curr:
+          nxt = curr.next
+          curr.next = prev
+          prev = curr
+          curr = nxt
+      return prev
+#+END_SRC
+
 ** Graph Routines
 *** BFS
 #+BEGIN_SRC python
@@ -134,3 +150,8 @@
               stack.append(neighbour)
               visited.add(neighbour)
 #+END_SRC
+
+* COMMENT File Local Variables
+# Local Variables:
+# jethro/org-multicol-latex-column-count: 1
+# End:
