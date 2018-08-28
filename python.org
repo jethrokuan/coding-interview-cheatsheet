@@ -153,5 +153,5 @@
 
 * COMMENT File Local Variables
 # Local Variables:
-# jethro/org-multicol-latex-column-count: 1
+# jethro/org-multicol-latex-column-count: 3
 # End:
