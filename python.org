@@ -28,6 +28,15 @@
   q.qsize()
 #+END_SRC
 
+#+BEGIN_SRC python
+  from collections import deque
+
+  q = deque()
+  q.append(1) # push to queue
+  q[0] # retrieve, but not remove from queue
+  q.popleft() # remove and return item from queue
+#+END_SRC
+
 ** Priority Queue
 #+BEGIN_SRC python
   import queue
@@ -41,6 +50,45 @@
   while not pq.empty():
       print(pq.get())
 
+#+END_SRC
+
+** Bisect
+- ~bisect.bisect_left~ returns first element that is not less than a
+  targeted value. Returned value will be ~len(a)~ if not found.
+- ~bisect.bisect_right~ returns first element that is greater than the
+  target value. Returned value will be ~len(a)~ if not found.
+#+BEGIN_SRC python
+  # Students sorted by descending GPA, and tie break by name
+
+  import bisect
+
+  Student = collections.namedtuple("Student", ("name", "gpa"))
+
+  def comp_gpa(student):
+      return (-student.gpa, student.name)
+
+  def search_student(students, target):
+      i = bisect.bisect_left([comp_gpa(s) for s in students], comp_gpa(target))
+      return 0 <= i < len(students) and students[i] == target
+
+#+END_SRC
+** Hash Tables
+#+BEGIN_SRC python
+  from collection import defaultdict
+
+  d = defaultdict(list)
+  d["k"] # []
+#+END_SRC
+** Sorting
+Implement ~__lt__~ for python objects to get sorting behaviour.
+
+#+BEGIN_SRC python
+  class Student(object):
+      def __init__(self, name):
+          self.name = name
+
+      def __lt__(self, other):
+          return self.name < other.name
 #+END_SRC
 
 * Common Routines
@@ -74,8 +122,8 @@
           A[right], A[new_pivot_idx] = A[new_pivot_idx], A[right]
       return new_pivot_idx
 #+END_SRC
-*** Linked Lists
-**** Reverse Sub-list
+** Linked Lists
+*** Reverse Sub-list
 #+BEGIN_SRC python
   def reverse_sublist(L, start, finish):
       dummy_head = sublist_head = ListNode(0, L)
@@ -91,7 +139,7 @@
 
       return dummy_head.next
 #+END_SRC
-**** Cycle Finding
+*** Cycle Finding
 #+BEGIN_SRC python
   def has_cycle(head):
       fast = slow = head
@@ -113,6 +161,62 @@
           prev = curr
           curr = nxt
       return prev
+#+END_SRC
+** Trees
+*** Traversal
+#+BEGIN_SRC python
+  def tree_traversal(root):
+      if root:
+          print("Preorder: %d" % root.data)
+          tree_traversal(root.left)
+          print("Inorder: %d" % root.data)
+          tree_traversal(root.right)
+          print("Postorder: %d" % root.data)
+#+END_SRC
+
+Iterative:
+#+BEGIN_SRC python
+  def inorder_traversal(tree):
+      s, result = [], []
+
+      while s or tree:
+          if tree:
+              s.append(tree)
+              # Going left.
+              tree = tree.left
+          else:
+              tree = s.pop()
+              result.append(tree.data)
+              tree = tree.right
+      return result
+#+END_SRC
+
+Preorder Iterative:
+#+BEGIN_SRC python
+  def preorder_traversal(tree):
+      path, result = [tree], []
+
+      while path:
+          curr = path.pop()
+          if curr:
+              result.append(curr.data)
+              path += [curr.right, curr.left]
+
+      return result
+#+END_SRC
+** Heap Routines
+*** Top k
+#+BEGIN_SRC python
+  import heapq
+
+  def top_k(k, stream):
+      # Entries compared by length
+      min_heap = [(len(s), s) for s in itertools.islice(stream, k)]
+      heapq.heapify(min_heap)
+
+      for next_string in stream:
+          heapq.heappushpop(min_heap, (len(next_string), next_string))
+      return [p[1] for p in heapq.nsmallest(k, min_heap)]
 #+END_SRC
 
 ** Graph Routines
