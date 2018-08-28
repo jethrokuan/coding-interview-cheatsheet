@@ -1,0 +1,88 @@
+#+TITLE: Python Interview Cheatsheet
+* Libraries
+** Heap
+#+BEGIN_SRC python
+  import heapq
+
+  a = [1,2,3,4,5,6]
+  # Heapq defaults to min heap
+  heapq.heapify(a) # makes a into a min heap object
+  heapq.heappop(a)
+
+  heapq._heapify_max(a) # Makes a into max heap
+  heapq._heappop_max(a)
+
+#+END_SRC
+** Queue
+#+BEGIN_SRC python
+  import queue
+
+  q = queue.Queue()
+
+  q.empty()
+  q.full() # if maxsize specified
+  q.put(item)
+  q.get()
+  q.qsize()
+#+END_SRC
+
+** Priority Queue
+#+BEGIN_SRC python
+  import queue
+  pq = queue.PriorityQueue()
+
+  pq.put((10, 'ten'))
+  pq.put((1, 'one'))
+  pq.put((5, 'five'))
+
+  x = []
+  while not pq.empty():
+      print(pq.get())
+
+#+END_SRC
+
+* Common Routines
+** Binary Search
+#+BEGIN_SRC python :results output
+  def binary_search(A, target):
+      low, high = 0, len(A)-1
+      while low <= high:
+          mid = (low + high) // 2
+
+          if A[mid] == target:
+              return mid
+          elif A[mid] < target:
+              low = mid + 1
+          else:
+              high = mid - 1
+      return -1
+
+  A = [1,2,4,6,7,9,20]
+  t = 7
+
+  print(binary_search(A, t))
+#+END_SRC
+
+#+RESULTS:
+: 4
+** Graph Routines
+*** BFS
+#+BEGIN_SRC python
+  def bfs(node):
+      queue
+#+END_SRC
+
+*** DFS
+#+BEGIN_SRC python
+  def dfs(node):
+      stack = [node]
+      visited = set()
+      visited.add(node)
+      while stack:
+          n = stack.pop()
+
+          for neighbour in n.neighbours and neighbour not in visited:
+              stack.append(neighbour)
+              visited.add(neighbour)
+#+END_SRC
+
